@@ -10,9 +10,9 @@ class HhruSpider(scrapy.Spider):
                   'https://hh.ru/search/vacancy?clusters=true&area=2&no_magic=true&ored_clusters=true&items_on_page=20&enable_snippets=true&salary=&text=Python']
 
     def parse(self, response: HtmlResponse):
-        # next_page = response.xpath("//a[@data-qa='pager-next']/@href").get()
-        # if next_page:
-        #     yield response.follow(next_page, callback=self.parse)
+        next_page = response.xpath("//a[@data-qa='pager-next']/@href").get()
+        if next_page:
+            yield response.follow(next_page, callback=self.parse)
 
         links = response.xpath("//a[@data-qa='vacancy-serp__vacancy-title']/@href").getall()
         for link in links:
